@@ -234,6 +234,27 @@ h2 {
   gap: 1rem;
 }
 
+.works-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.work-item {
+  display: contents;
+}
+
+.work-text h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.work-text p {
+  margin: 0;
+}
+
 .image-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -392,6 +413,16 @@ a {
 
   .works-grid {
     grid-template-columns: 1fr;
+  }
+
+  .works-list {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .work-item {
+    display: grid;
+    gap: 0.6rem;
   }
 
   .image-grid {

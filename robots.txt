@@ -1,0 +1,11 @@
+# robots.txt para victorechevarria.art
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://a1varogiz.github.io/vetxebaweb/sitemap.xml
+
+# Archivos que no deben indexarse
+Disallow: /assets/
+Disallow: /*.pdf$

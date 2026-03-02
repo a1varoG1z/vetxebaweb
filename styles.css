@@ -551,6 +551,131 @@ a {
   margin-bottom: 0.4rem;
 }
 
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lightbox.is-open {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  padding: 0;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
+  z-index: 10000;
+}
+
+.lightbox-close:hover {
+  opacity: 0.7;
+}
+
+.lightbox-trigger {
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.lightbox-trigger:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
+}
+
+/* Press page */
+.press-list {
+  max-width: 900px;
+}
+
+.press-item {
+  padding: 1.8rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.press-item:last-child {
+  border-bottom: none;
+}
+
+.press-item h3 {
+  margin: 0 0 0.8rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.press-excerpt {
+  margin: 0 0 0.6rem;
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+.press-meta {
+  margin: 0 0 0.8rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.press-link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  border-bottom: 1px solid var(--text);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.press-link:hover,
+.press-link:focus-visible {
+  color: var(--active);
+  border-color: var(--active);
+}
+
+/* CV Download button */
+.btn-download {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--text);
+  color: var(--bg);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-download:hover,
+.btn-download:focus-visible {
+  background: var(--active);
+  transform: translateY(-1px);
+}
+
 @media (max-width: 900px) {
   .inner-page .site-footer,
   .home-page .site-footer {

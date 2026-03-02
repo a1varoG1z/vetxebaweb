@@ -551,7 +551,7 @@ a {
   margin-bottom: 0.4rem;
 }
 
-/* Lightbox */
+/* Lightbox Carrusel */
 .lightbox {
   display: none;
   position: fixed;
@@ -570,19 +570,66 @@ a {
   display: flex;
 }
 
+.lightbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
 .lightbox-img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 100%;
+  max-height: 70vh;
   object-fit: contain;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   cursor: default;
+  border-radius: 4px;
+}
+
+.lightbox-info {
+  text-align: center;
+  color: #fff;
+  max-width: 500px;
+}
+
+.lightbox-title {
+  margin: 0 0 0.6rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.lightbox-description {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.lightbox-counter {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.5rem;
 }
 
 .lightbox-close {
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: 40px;
+  font-size: 36px;
   color: #fff;
   background: none;
   border: none;
@@ -593,10 +640,40 @@ a {
   width: 40px;
   height: 40px;
   z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox-close:hover {
   opacity: 0.7;
+}
+
+.lightbox-nav {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 28px;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lightbox-nav:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.lightbox-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .lightbox-trigger {
@@ -607,6 +684,29 @@ a {
 .lightbox-trigger:hover {
   transform: scale(1.02);
   opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .lightbox-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .lightbox-img {
+    max-height: 50vh;
+  }
+  
+  .lightbox-close {
+    top: 10px;
+    right: 10px;
+    font-size: 32px;
+  }
 }
 
 /* Press page */

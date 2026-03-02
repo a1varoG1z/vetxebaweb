@@ -40,41 +40,52 @@
 
     <div class="works-list">
       <article class="work-item">
-        <figure class="image-card lightbox-trigger" data-img="img/fichero_399429_20170717.jpg">
+        <figure class="image-card lightbox-trigger" data-series="umbral" data-index="0">
           <img src="img/fichero_399429_20170717.jpg" alt="Serie Umbral - Obra de Víctor Echevarría">
         </figure>
         <div class="work-text">
           <h3>Serie Umbral</h3>
-          <p>Capas translúcidas que exploran límites entre paisaje y emoción.</p>
+          <p>Capas translúcidas que exploran límites entre paisaje y emoción. Investigación sobre veladuras y contrastes matéricos en la búsqueda del equilibrio entre lo visible y lo sentido.</p>
         </div>
       </article>
 
       <article class="work-item">
-        <figure class="image-card lightbox-trigger" data-img="img/889f4e9a-cc27-4a10-a990-c8fe19525ef0_16-9-discover-aspect-ratio_default_0_x1021y591.jpg">
+        <figure class="image-card lightbox-trigger" data-series="materia" data-index="0">
           <img src="img/889f4e9a-cc27-4a10-a990-c8fe19525ef0_16-9-discover-aspect-ratio_default_0_x1021y591.jpg" alt="Serie Materia Viva - Pintura abstracta de Víctor Echevarría">
         </figure>
         <div class="work-text">
           <h3>Serie Materia Viva</h3>
-          <p>Texturas orgánicas, pigmentos densos y ritmo gestual.</p>
+          <p>Texturas orgánicas, pigmentos densos y ritmo gestual. Exploración de la materia como lenguaje donde el gesto y el color construyen significado a través de capas sucesivas.</p>
         </div>
       </article>
 
       <article class="work-item">
-        <figure class="image-card lightbox-trigger" data-img="img/M1-1501780127-U2201797708302yiC--1200x840@Diario Vasco.webp">
+        <figure class="image-card lightbox-trigger" data-series="archivo" data-index="0">
           <img src="img/M1-1501780127-U2201797708302yiC--1200x840@Diario Vasco.webp" alt="Serie Archivo Interior - Registro de obra en prensa">
         </figure>
         <div class="work-text">
           <h3>Serie Archivo Interior</h3>
-          <p>Fragmentos visuales de memoria, tiempo y silencio.</p>
+          <p>Fragmentos visuales de memoria, tiempo y silencio. Construcción de narrativas através de elementos que evocan archivo, documento y huella, invitando a la contemplación íntima.</p>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- Lightbox modal -->
+  <!-- Lightbox carrusel modal -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-    <img src="" alt="Imagen ampliada" class="lightbox-img">
+    <div class="lightbox-container">
+      <button class="lightbox-nav lightbox-prev" aria-label="Obra anterior">❮</button>
+      <div class="lightbox-content">
+        <img src="" alt="Imagen ampliada" class="lightbox-img">
+        <div class="lightbox-info">
+          <h3 class="lightbox-title"></h3>
+          <p class="lightbox-description"></p>
+          <span class="lightbox-counter"><span class="current">1</span> / <span class="total">1</span></span>
+        </div>
+      </div>
+      <button class="lightbox-nav lightbox-next" aria-label="Obra siguiente">❯</button>
+    </div>
   </div>
   </main>
 

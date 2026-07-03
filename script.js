@@ -21,11 +21,11 @@ document.querySelectorAll('.footer-year').forEach(el => {
   el.textContent = new Date().getFullYear();
 });
 
-// ===== Obra lightbox (obra.html only) =====
-const obraGrid = document.querySelector('.obras-grid');
+// ===== Obra page: colecciones nav + lightbox + modal =====
+const coleccionesNav = document.querySelector('.colecciones-nav');
 const lightbox = document.getElementById('lightbox');
 
-if (obraGrid && lightbox) {
+if (coleccionesNav && lightbox) {
   const lightboxImg = lightbox.querySelector('.lightbox-img');
   const lightboxTitle = lightbox.querySelector('.lightbox-title');
   const lightboxDesc = lightbox.querySelector('.lightbox-description');
@@ -35,29 +35,57 @@ if (obraGrid && lightbox) {
   const currentCounter = lightbox.querySelector('.current');
   const totalCounter = lightbox.querySelector('.total');
 
-  const obraBtns = Array.from(obraGrid.querySelectorAll('.obra-img-btn'));
-  const collection = obraBtns.map(btn => {
-    const card = btn.closest('.obra-card');
-    return {
-      src: btn.querySelector('img').getAttribute('src'),
-      alt: btn.querySelector('img').getAttribute('alt'),
-      titulo: card.querySelector('.obra-titulo').textContent,
-      tecnica: card.querySelector('.obra-tecnica').textContent,
-    };
-  });
-
-  totalCounter.textContent = collection.length;
+  let collection = [];
   let currentIdx = 0;
 
-  obraBtns.forEach((btn, idx) => {
-    btn.addEventListener('click', () => {
-      currentIdx = idx;
-      openLightbox();
+  function buildCollection() {
+    const activeColeccion = document.querySelector('.coleccion:not([hidden])');
+    if (!activeColeccion) return;
+    const btns = Array.from(activeColeccion.querySelectorAll('.obra-img-btn'));
+    collection = btns.map(btn => {
+      const card = btn.closest('.obra-card');
+      return {
+        src: btn.querySelector('img').getAttribute('src'),
+        alt: btn.querySelector('img').getAttribute('alt'),
+        titulo: card.querySelector('.obra-titulo').textContent,
+        tecnica: card.querySelector('.obra-tecnica').textContent,
+      };
     });
+    totalCounter.textContent = collection.length;
+  }
+
+  // Collection switching
+  coleccionesNav.addEventListener('click', e => {
+    const btn = e.target.closest('.coleccion-btn');
+    if (!btn) return;
+    const targetId = btn.dataset.target;
+    if (!targetId) return;
+
+    coleccionesNav.querySelectorAll('.coleccion-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+
+    document.querySelectorAll('.coleccion').forEach(col => {
+      col.hidden = col.id !== targetId;
+    });
+
+    buildCollection();
+  });
+
+  // Event delegation: open lightbox from any active collection
+  document.querySelector('.obra-page').addEventListener('click', e => {
+    const btn = e.target.closest('.obra-img-btn');
+    if (!btn) return;
+    const activeColeccion = document.querySelector('.coleccion:not([hidden])');
+    if (!activeColeccion || !activeColeccion.contains(btn)) return;
+    const allBtns = Array.from(activeColeccion.querySelectorAll('.obra-img-btn'));
+    currentIdx = allBtns.indexOf(btn);
+    buildCollection();
+    openLightbox();
   });
 
   function openLightbox() {
     const obra = collection[currentIdx];
+    if (!obra) return;
     lightboxImg.src = obra.src;
     lightboxImg.alt = obra.alt;
     lightboxTitle.textContent = obra.titulo;
@@ -93,6 +121,9 @@ if (obraGrid && lightbox) {
     if (e.key === 'ArrowLeft') lightboxPrev.click();
     if (e.key === 'ArrowRight') lightboxNext.click();
   });
+
+  // Initialise with the default visible collection
+  buildCollection();
 }
 
 // ===== Modal de consulta (obra.html only) =====
@@ -107,19 +138,19 @@ if (modal) {
   let obraActual = '';
   let precioActual = '';
 
-  document.querySelectorAll('.btn-consultar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      obraActual = btn.dataset.obra;
-      precioActual = btn.dataset.precio;
-      modalObraRef.textContent = `${obraActual} · ${precioActual}`;
-      form.hidden = false;
-      form.reset();
-      modalSuccess.hidden = true;
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      document.getElementById('campo-nombre').focus();
-    });
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-consultar');
+    if (!btn) return;
+    obraActual = btn.dataset.obra;
+    precioActual = btn.dataset.precio;
+    modalObraRef.textContent = `${obraActual} · ${precioActual}`;
+    form.hidden = false;
+    form.reset();
+    modalSuccess.hidden = true;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('campo-nombre').focus();
   });
 
   function closeModal() {
@@ -152,7 +183,7 @@ if (modal) {
       mensaje || '(Sin mensaje adicional)',
       '',
       '---',
-      'Enviado desde victorechevarria.art',
+      'Enviado desde victorechevarria.com',
     ];
     const body = encodeURIComponent(bodyLines.join('\n'));
 

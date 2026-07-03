@@ -1,4 +1,4 @@
-# robots.txt para victorechevarria.art
+# robots.txt para victorechevarria.com
 
 User-agent: *
 Allow: /

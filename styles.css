@@ -72,16 +72,15 @@ body {
 
 .menu-toggle {
   display: none;
-  font: inherit;
-  border: 1px solid var(--line);
   background: transparent;
-  color: inherit;
-  padding: 0.45rem 0.8rem;
+  border: none;
+  padding: 0.3rem;
   cursor: pointer;
+  color: inherit;
+  line-height: 0;
 }
 
 .home-page .menu-toggle {
-  border: 1px solid var(--line);
   color: var(--text);
 }
 

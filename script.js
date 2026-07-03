@@ -21,11 +21,16 @@ document.querySelectorAll('.footer-year').forEach(el => {
   el.textContent = new Date().getFullYear();
 });
 
-// ===== Obra page: colecciones nav + lightbox + modal =====
-const coleccionesNav = document.querySelector('.colecciones-nav');
+// ===== Obra page: colecciones selector + lightbox =====
+const coleccionesSelector = document.getElementById('colecciones-selector');
 const lightbox = document.getElementById('lightbox');
 
-if (coleccionesNav && lightbox) {
+if (coleccionesSelector && lightbox) {
+  const trigger = coleccionesSelector.querySelector('.colecciones-trigger');
+  const panel = document.getElementById('colecciones-panel');
+  const triggerTitle = trigger.querySelector('.trigger-title');
+  const triggerYear = trigger.querySelector('.trigger-year');
+
   const lightboxImg = lightbox.querySelector('.lightbox-img');
   const lightboxTitle = lightbox.querySelector('.lightbox-title');
   const lightboxDesc = lightbox.querySelector('.lightbox-description');
@@ -39,9 +44,9 @@ if (coleccionesNav && lightbox) {
   let currentIdx = 0;
 
   function buildCollection() {
-    const activeColeccion = document.querySelector('.coleccion:not([hidden])');
-    if (!activeColeccion) return;
-    const btns = Array.from(activeColeccion.querySelectorAll('.obra-img-btn'));
+    const activeCol = document.querySelector('.coleccion:not([hidden])');
+    if (!activeCol) return;
+    const btns = Array.from(activeCol.querySelectorAll('.obra-img-btn'));
     collection = btns.map(btn => {
       const card = btn.closest('.obra-card');
       return {
@@ -54,30 +59,68 @@ if (coleccionesNav && lightbox) {
     totalCounter.textContent = collection.length;
   }
 
-  // Collection switching
-  coleccionesNav.addEventListener('click', e => {
-    const btn = e.target.closest('.coleccion-btn');
-    if (!btn) return;
-    const targetId = btn.dataset.target;
-    if (!targetId) return;
+  // ----- Selector panel open / close -----
+  function openPanel() {
+    panel.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+  }
 
-    coleccionesNav.querySelectorAll('.coleccion-btn').forEach(b => b.classList.remove('is-active'));
-    btn.classList.add('is-active');
+  function closePanel() {
+    panel.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+  }
 
+  trigger.addEventListener('click', () => {
+    panel.hidden ? openPanel() : closePanel();
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!coleccionesSelector.contains(e.target)) closePanel();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.hidden) {
+      closePanel();
+      trigger.focus();
+    }
+  });
+
+  // ----- Collection switching -----
+  panel.addEventListener('click', e => {
+    const item = e.target.closest('.coleccion-item');
+    if (!item) return;
+
+    // Update panel active state + aria-selected
+    panel.querySelectorAll('.coleccion-item').forEach(i => {
+      i.classList.remove('is-active');
+      i.closest('[role="option"]').setAttribute('aria-selected', 'false');
+    });
+    item.classList.add('is-active');
+    item.closest('[role="option"]').setAttribute('aria-selected', 'true');
+
+    // Update trigger display
+    triggerTitle.textContent = item.dataset.title;
+    triggerYear.textContent = item.dataset.year;
+
+    // Show/hide collections
+    const targetId = item.dataset.target;
     document.querySelectorAll('.coleccion').forEach(col => {
       col.hidden = col.id !== targetId;
     });
 
+    closePanel();
     buildCollection();
   });
 
-  // Event delegation: open lightbox from any active collection
+  // ----- Lightbox (event delegation from obra-page) -----
   document.querySelector('.obra-page').addEventListener('click', e => {
     const btn = e.target.closest('.obra-img-btn');
     if (!btn) return;
-    const activeColeccion = document.querySelector('.coleccion:not([hidden])');
-    if (!activeColeccion || !activeColeccion.contains(btn)) return;
-    const allBtns = Array.from(activeColeccion.querySelectorAll('.obra-img-btn'));
+    const activeCol = document.querySelector('.coleccion:not([hidden])');
+    if (!activeCol || !activeCol.contains(btn)) return;
+    const allBtns = Array.from(activeCol.querySelectorAll('.obra-img-btn'));
     currentIdx = allBtns.indexOf(btn);
     buildCollection();
     openLightbox();
@@ -122,7 +165,6 @@ if (coleccionesNav && lightbox) {
     if (e.key === 'ArrowRight') lightboxNext.click();
   });
 
-  // Initialise with the default visible collection
   buildCollection();
 }
 

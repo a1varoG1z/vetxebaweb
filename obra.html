@@ -42,18 +42,44 @@
 
       <h1 class="sr-only">Obra</h1>
 
-      <!-- Navegación entre colecciones -->
-      <nav class="colecciones-nav" aria-label="Colecciones">
-        <button class="coleccion-btn is-active" data-target="lo-que-queda-del-mar">
-          Lo que queda del mar cuando cierro los ojos
-          <span class="coleccion-nav-year">2024–2025</span>
+      <!-- Selector de colección -->
+      <div class="colecciones-selector" id="colecciones-selector">
+        <button class="colecciones-trigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-controls="colecciones-panel"
+                aria-label="Seleccionar colección">
+          <span class="trigger-label">Serie</span>
+          <span class="trigger-rule" aria-hidden="true"></span>
+          <span class="trigger-title">Lo que queda del mar cuando cierro los ojos</span>
+          <span class="trigger-year">2024–2025</span>
+          <span class="trigger-chevron" aria-hidden="true">
+            <svg width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </button>
-        <span class="coleccion-sep" aria-hidden="true">/</span>
-        <button class="coleccion-btn" data-target="geografias-del-silencio">
-          Geografías del silencio
-          <span class="coleccion-nav-year">2022–2023</span>
-        </button>
-      </nav>
+        <ul class="colecciones-panel" id="colecciones-panel" role="listbox" aria-label="Colecciones" hidden>
+          <li role="option" aria-selected="true">
+            <button class="coleccion-item is-active"
+                    data-target="lo-que-queda-del-mar"
+                    data-title="Lo que queda del mar cuando cierro los ojos"
+                    data-year="2024–2025">
+              <span class="coleccion-item-year">2024–2025</span>
+              <span class="coleccion-item-name">Lo que queda del mar cuando cierro los ojos</span>
+            </button>
+          </li>
+          <li role="option" aria-selected="false">
+            <button class="coleccion-item"
+                    data-target="geografias-del-silencio"
+                    data-title="Geografías del silencio"
+                    data-year="2022–2023">
+              <span class="coleccion-item-year">2022–2023</span>
+              <span class="coleccion-item-name">Geografías del silencio</span>
+            </button>
+          </li>
+        </ul>
+      </div>
 
       <!-- ======== COLECCIÓN 1 (por defecto) ======== -->
       <div class="coleccion" id="lo-que-queda-del-mar">

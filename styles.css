@@ -1134,54 +1134,145 @@ a {
   max-width: 1200px;
 }
 
-.colecciones-nav {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.3rem 0;
-  margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 1.5rem;
+/* ============================================================
+   Colecciones — selector desplegable
+   ============================================================ */
+
+.colecciones-selector {
+  position: relative;
+  margin-bottom: 3rem;
 }
 
-.coleccion-sep {
-  padding: 0 1rem;
-  color: var(--line);
-  font-size: 1.6rem;
-  line-height: 1;
-}
-
-.coleccion-btn {
+.colecciones-trigger {
   all: unset;
   cursor: pointer;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.colecciones-trigger:hover,
+.colecciones-trigger[aria-expanded="true"] {
+  border-color: var(--text);
+}
+
+.trigger-label {
+  font-family: "Inter", sans-serif;
+  font-size: 0.65rem;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
   color: var(--muted);
-  transition: color 0.2s;
-  display: inline-flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  flex-shrink: 0;
 }
 
-.coleccion-btn:hover {
+.trigger-rule {
+  width: 1px;
+  height: 0.9rem;
+  background: var(--line);
+  flex-shrink: 0;
+}
+
+.trigger-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--text);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.coleccion-btn.is-active {
-  color: var(--text);
-}
-
-.coleccion-nav-year {
+.trigger-year {
   font-family: "Inter", sans-serif;
   font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
+  letter-spacing: 0.04em;
+  color: var(--active);
+  flex-shrink: 0;
 }
 
-.coleccion-btn.is-active .coleccion-nav-year {
+.trigger-chevron {
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: transform 0.22s ease;
+  display: flex;
+  align-items: center;
+}
+
+.colecciones-trigger[aria-expanded="true"] .trigger-chevron {
+  transform: rotate(180deg);
+}
+
+/* Panel */
+
+.colecciones-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border: 1px solid var(--text);
+  border-top: none;
+  z-index: 30;
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.colecciones-panel[hidden] {
+  display: none;
+}
+
+.coleccion-item {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 0.6rem 1.1rem;
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid transparent;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.coleccion-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.coleccion-item.is-active {
+  border-left-color: var(--active);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.coleccion-item-year {
+  font-family: "Inter", sans-serif;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  flex-shrink: 0;
+  min-width: 5.2rem;
+}
+
+.coleccion-item.is-active .coleccion-item-year {
   color: var(--active);
+}
+
+.coleccion-item-name {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.4;
 }
 
 /* ============================================================

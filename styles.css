@@ -883,11 +883,17 @@ a {
 }
 
 .obra-tecnica {
-  margin: 0 0 0.8rem;
+  margin: 0 0 0.2rem;
   font-size: 0.78rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.obra-meta {
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+  color: var(--muted);
 }
 
 .obra-compra {

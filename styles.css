@@ -1115,6 +1115,76 @@ a {
 }
 
 /* ============================================================
+   Obra page — colecciones nav
+   ============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.obra-page {
+  max-width: 1200px;
+}
+
+.colecciones-nav {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.3rem 0;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1.5rem;
+}
+
+.coleccion-sep {
+  padding: 0 1rem;
+  color: var(--line);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.coleccion-btn {
+  all: unset;
+  cursor: pointer;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.2s;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.coleccion-btn:hover {
+  color: var(--text);
+}
+
+.coleccion-btn.is-active {
+  color: var(--text);
+}
+
+.coleccion-nav-year {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.coleccion-btn.is-active .coleccion-nav-year {
+  color: var(--active);
+}
+
+/* ============================================================
    Responsive — obras grid
    ============================================================ */
 

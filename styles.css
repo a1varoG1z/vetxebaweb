@@ -1358,3 +1358,55 @@ a {
     padding: 1.6rem 1.2rem;
   }
 }
+
+/* ============================================================
+   Contact page — inline form
+   ============================================================ */
+
+.form-group select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  appearance: none;
+  border-radius: 0;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: var(--text);
+}
+
+.label-required {
+  color: var(--active);
+}
+
+.contact-form-section {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  max-width: 560px;
+}
+
+.contact-form-title {
+  margin: 0 0 1.8rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.form-success {
+  padding: 1rem 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.form-success p {
+  margin: 0;
+}

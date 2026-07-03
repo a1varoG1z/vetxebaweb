@@ -215,7 +215,7 @@ if (modal) {
     if (modal.classList.contains('is-open') && e.key === 'Escape') closeModal();
   });
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const nombre = document.getElementById('campo-nombre').value.trim();
     const emailVal = document.getElementById('campo-email').value.trim();
@@ -223,21 +223,63 @@ if (modal) {
 
     if (!nombre || !emailVal) return;
 
-    const subject = encodeURIComponent(`Consulta obra — ${obraActual}`);
-    const bodyLines = [
-      `Obra: ${obraActual} (${precioActual})`,
-      `Nombre: ${nombre}`,
-      `Email: ${emailVal}`,
-      '',
-      mensaje || '(Sin mensaje adicional)',
-      '',
-      '---',
-      'Enviado desde victorechevarria.com',
-    ];
-    const body = encodeURIComponent(bodyLines.join('\n'));
+    const submitBtn = form.querySelector('[type="submit"]');
+    submitBtn.disabled = true;
 
-    window.open(`mailto:alvaroglz1996@gmail.com?subject=${subject}&body=${body}`);
-    form.hidden = true;
-    modalSuccess.hidden = false;
+    try {
+      const res = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          obra: `${obraActual} (${precioActual})`,
+          nombre,
+          email: emailVal,
+          mensaje: mensaje || '(Sin mensaje adicional)',
+        }),
+      });
+      if (res.ok) {
+        form.hidden = true;
+        modalSuccess.hidden = false;
+      } else {
+        submitBtn.disabled = false;
+      }
+    } catch {
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+// ===== Contact page form =====
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const nombre = document.getElementById('c-nombre').value.trim();
+    const emailVal = document.getElementById('c-email').value.trim();
+    const motivo = document.getElementById('c-motivo').value;
+    const mensaje = document.getElementById('c-mensaje').value.trim();
+
+    if (!nombre || !emailVal || !mensaje) return;
+
+    const submitBtn = contactForm.querySelector('[type="submit"]');
+    submitBtn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, email: emailVal, motivo, mensaje }),
+      });
+      if (res.ok) {
+        contactForm.reset();
+        document.getElementById('contact-success').hidden = false;
+        submitBtn.hidden = true;
+      } else {
+        submitBtn.disabled = false;
+      }
+    } catch {
+      submitBtn.disabled = false;
+    }
   });
 }

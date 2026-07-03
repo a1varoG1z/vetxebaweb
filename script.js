@@ -227,7 +227,7 @@ if (modal) {
     submitBtn.disabled = true;
 
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      const res = await fetch('https://formspree.io/f/mnjklzwe', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -266,7 +266,7 @@ if (contactForm) {
     submitBtn.disabled = true;
 
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      const res = await fetch('https://formspree.io/f/mnjklzwe', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre, email: emailVal, motivo, mensaje }),

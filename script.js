@@ -184,12 +184,8 @@ if (modal) {
   const modalBackdrop = document.getElementById('modal-backdrop');
   const form = document.getElementById('form-consulta');
   const modalSuccess = document.getElementById('modal-success');
-  const fallbackHint = document.getElementById('fallback-hint');
-  const fallbackSuccess = document.getElementById('fallback-success');
-  const btnFallback = document.getElementById('btn-fallback');
   let obraActual = '';
   let precioActual = '';
-  let pendingData = null;
 
   document.addEventListener('click', e => {
     const btn = e.target.closest('.btn-consultar');
@@ -200,9 +196,6 @@ if (modal) {
     form.hidden = false;
     form.reset();
     modalSuccess.hidden = true;
-    fallbackHint.hidden = false;
-    fallbackSuccess.hidden = true;
-    btnFallback.disabled = false;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -222,7 +215,7 @@ if (modal) {
     if (modal.classList.contains('is-open') && e.key === 'Escape') closeModal();
   });
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const nombre = document.getElementById('campo-nombre').value.trim();
     const emailVal = document.getElementById('campo-email').value.trim();
@@ -230,49 +223,30 @@ if (modal) {
 
     if (!nombre || !emailVal) return;
 
-    pendingData = {
-      obra: `${obraActual} (${precioActual})`,
-      nombre,
-      email: emailVal,
-      mensaje: mensaje || '(Sin mensaje adicional)',
-    };
+    const submitBtn = form.querySelector('[type="submit"]');
+    submitBtn.disabled = true;
 
-    const subject = encodeURIComponent(`Consulta obra — ${obraActual}`);
-    const bodyLines = [
-      `Obra: ${obraActual} (${precioActual})`,
-      `Nombre: ${nombre}`,
-      `Email: ${emailVal}`,
-      '',
-      mensaje || '(Sin mensaje adicional)',
-      '',
-      '---',
-      'Enviado desde victorechevarria.com',
-    ];
-    window.open(`mailto:contacto@victorechevarria.com?subject=${subject}&body=${encodeURIComponent(bodyLines.join('\n'))}`);
-
-    form.hidden = true;
-    modalSuccess.hidden = false;
-  });
-
-  // Fallback Web3Forms — solo si el mailto no se ha podido abrir
-  btnFallback.addEventListener('click', async () => {
-    if (!pendingData) return;
-    btnFallback.disabled = true;
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ access_key: 'd16e2c6b-877b-4509-af7b-34c417ada6d4', ...pendingData }),
+        body: JSON.stringify({
+          access_key: 'd16e2c6b-877b-4509-af7b-34c417ada6d4',
+          obra: `${obraActual} (${precioActual})`,
+          nombre,
+          email: emailVal,
+          mensaje: mensaje || '(Sin mensaje adicional)',
+        }),
       });
       const data = await res.json();
       if (data.success) {
-        fallbackHint.hidden = true;
-        fallbackSuccess.hidden = false;
+        form.hidden = true;
+        modalSuccess.hidden = false;
       } else {
-        btnFallback.disabled = false;
+        submitBtn.disabled = false;
       }
     } catch {
-      btnFallback.disabled = false;
+      submitBtn.disabled = false;
     }
   });
 }

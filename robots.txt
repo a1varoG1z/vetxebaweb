@@ -6,6 +6,8 @@ Allow: /
 # Sitemap
 Sitemap: https://a1varogiz.github.io/vetxebaweb/sitemap.xml
 
+# Nota: actualizar dominio a www.victoretxebarria.com cuando esté configurado
+
 # Archivos que no deben indexarse
 Disallow: /assets/
 Disallow: /*.pdf$

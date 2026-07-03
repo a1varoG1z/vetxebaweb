@@ -166,6 +166,13 @@ if (coleccionesSelector && lightbox) {
   });
 
   buildCollection();
+
+  // Deep-link: si la URL lleva un hash que coincide con una colección, activarla
+  const hashTarget = location.hash.slice(1);
+  if (hashTarget) {
+    const linkedItem = panel.querySelector(`.coleccion-item[data-target="${CSS.escape(hashTarget)}"]`);
+    if (linkedItem && !linkedItem.classList.contains('is-active')) linkedItem.click();
+  }
 }
 
 // ===== Modal de consulta (obra.html only) =====

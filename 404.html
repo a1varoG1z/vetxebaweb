@@ -3,24 +3,60 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Biografía | Víctor Echevarría</title>
+  <title>Página no encontrada | Víctor Echevarría</title>
   <meta name="author" content="Víctor Echevarría">
-  <meta name="description" content="Biografía de Víctor Echevarría (Víctor Etxebarria).">
-  <link rel="canonical" href="https://a1varogiz.github.io/vetxebaweb/biografia.html">
+  <meta name="description" content="La página que buscas no existe.">
+  <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png">
-  <meta property="og:title" content="Biografía | Víctor Echevarría">
-  <meta property="og:description" content="Biografía de Víctor Echevarría (Víctor Etxebarria), pintor contemporáneo.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://a1varogiz.github.io/vetxebaweb/biografia.html">
-  <meta property="og:image" content="https://a1varogiz.github.io/vetxebaweb/img/retrato-victor.jpeg">
-  <meta property="og:image:alt" content="Retrato de Víctor Echevarría">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://a1varogiz.github.io/vetxebaweb/img/retrato-victor.jpeg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .not-found {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 60vh;
+    }
+    .not-found-code {
+      font-family: "Inter", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin: 0 0 1.2rem;
+    }
+    .not-found-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.15;
+      margin: 0 0 1.2rem;
+    }
+    .not-found-text {
+      color: var(--muted);
+      margin: 0 0 2.5rem;
+      max-width: 38ch;
+    }
+    .not-found-link {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 0.1rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .not-found-link:hover {
+      color: var(--active);
+      border-color: var(--active);
+    }
+  </style>
 </head>
 <body class="inner-page">
   <header class="site-header" id="top">
@@ -39,7 +75,7 @@
     <nav id="menu" class="menu" aria-label="Principal">
       <a href="index.html">Inicio</a>
       <a href="obra.html">Obra</a>
-      <a href="biografia.html" class="is-active">Biografía</a>
+      <a href="biografia.html">Biografía</a>
       <a href="exposiciones.html">Exposiciones</a>
       <a href="prensa.html">Prensa</a>
       <a href="contacto.html">Contacto</a>
@@ -47,24 +83,14 @@
   </header>
 
   <main>
-    <section class="section biography page-content">
-      <h1 class="page-title">Biografía</h1>
-      <div class="split-layout">
-        <figure class="feature-image">
-          <img src="img/retrato-victor.jpeg" alt="Retrato de Víctor Echevarría">
-        </figure>
-        <div class="text-side">
-          <p>
-            Víctor Echevarría (Víctor Etxebarria) desarrolla una práctica pictórica centrada en la relación entre gesto, materia y luz.
-            Su trabajo investiga la experiencia del paisaje emocional a través de composiciones contemporáneas, donde el color actúa como
-            lenguaje principal.
-          </p>
-          <p>
-            Su proceso parte de capas sucesivas, veladuras y contrastes matéricos para construir superficies que contienen tiempo, memoria
-            y tensión expresiva. La obra se sitúa entre la abstracción y la evocación de formas orgánicas.
-          </p>
-        </div>
-      </div>
+    <section class="section page-content not-found">
+      <p class="not-found-code">404</p>
+      <h1 class="not-found-title">Página no encontrada</h1>
+      <p class="not-found-text">
+        La dirección que buscas no existe o ha sido movida.<br>
+        Quizá encuentras lo que necesitas desde el inicio.
+      </p>
+      <a href="index.html" class="not-found-link">← Volver al inicio</a>
     </section>
   </main>
 

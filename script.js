@@ -166,6 +166,13 @@ if (coleccionesSelector && lightbox) {
   });
 
   buildCollection();
+
+  // Deep-link: si la URL lleva un hash que coincide con una colección, activarla
+  const hashTarget = location.hash.slice(1);
+  if (hashTarget) {
+    const linkedItem = panel.querySelector(`.coleccion-item[data-target="${CSS.escape(hashTarget)}"]`);
+    if (linkedItem && !linkedItem.classList.contains('is-active')) linkedItem.click();
+  }
 }
 
 // ===== Modal de consulta (obra.html only) =====
@@ -177,8 +184,12 @@ if (modal) {
   const modalBackdrop = document.getElementById('modal-backdrop');
   const form = document.getElementById('form-consulta');
   const modalSuccess = document.getElementById('modal-success');
+  const fallbackHint = document.getElementById('fallback-hint');
+  const fallbackSuccess = document.getElementById('fallback-success');
+  const btnFallback = document.getElementById('btn-fallback');
   let obraActual = '';
   let precioActual = '';
+  let pendingData = null;
 
   document.addEventListener('click', e => {
     const btn = e.target.closest('.btn-consultar');
@@ -189,6 +200,9 @@ if (modal) {
     form.hidden = false;
     form.reset();
     modalSuccess.hidden = true;
+    fallbackHint.hidden = false;
+    fallbackSuccess.hidden = true;
+    btnFallback.disabled = false;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -216,6 +230,13 @@ if (modal) {
 
     if (!nombre || !emailVal) return;
 
+    pendingData = {
+      obra: `${obraActual} (${precioActual})`,
+      nombre,
+      email: emailVal,
+      mensaje: mensaje || '(Sin mensaje adicional)',
+    };
+
     const subject = encodeURIComponent(`Consulta obra — ${obraActual}`);
     const bodyLines = [
       `Obra: ${obraActual} (${precioActual})`,
@@ -227,10 +248,65 @@ if (modal) {
       '---',
       'Enviado desde victorechevarria.com',
     ];
-    const body = encodeURIComponent(bodyLines.join('\n'));
+    window.open(`mailto:contacto@victorechevarria.com?subject=${subject}&body=${encodeURIComponent(bodyLines.join('\n'))}`);
 
-    window.open(`mailto:alvaroglz1996@gmail.com?subject=${subject}&body=${body}`);
     form.hidden = true;
     modalSuccess.hidden = false;
+  });
+
+  // Fallback Formspree — solo si el mailto no se ha podido abrir
+  btnFallback.addEventListener('click', async () => {
+    if (!pendingData) return;
+    btnFallback.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/mnjklzwe', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(pendingData),
+      });
+      if (res.ok) {
+        fallbackHint.hidden = true;
+        fallbackSuccess.hidden = false;
+      } else {
+        btnFallback.disabled = false;
+      }
+    } catch {
+      btnFallback.disabled = false;
+    }
+  });
+}
+
+// ===== Contact page form =====
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const nombre = document.getElementById('c-nombre').value.trim();
+    const emailVal = document.getElementById('c-email').value.trim();
+    const motivo = document.getElementById('c-motivo').value;
+    const mensaje = document.getElementById('c-mensaje').value.trim();
+
+    if (!nombre || !emailVal || !mensaje) return;
+
+    const submitBtn = contactForm.querySelector('[type="submit"]');
+    submitBtn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/mnjklzwe', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, email: emailVal, motivo, mensaje }),
+      });
+      if (res.ok) {
+        contactForm.reset();
+        document.getElementById('contact-success').hidden = false;
+        submitBtn.hidden = true;
+      } else {
+        submitBtn.disabled = false;
+      }
+    } catch {
+      submitBtn.disabled = false;
+    }
   });
 }

@@ -766,14 +766,12 @@ a {
   color: var(--bg);
   text-decoration: none;
   font-weight: 500;
-  border-radius: 4px;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.2s;
 }
 
 .btn-download:hover,
 .btn-download:focus-visible {
   background: var(--active);
-  transform: translateY(-1px);
 }
 
 @media (max-width: 900px) {
@@ -787,5 +785,358 @@ a {
     flex-direction: column;
     text-align: center;
     gap: 0.8rem;
+  }
+}
+
+/* ============================================================
+   COLLECTION PAGE — Lo que queda del mar…
+   ============================================================ */
+
+.collection-page {
+  padding-top: 2.3rem;
+}
+
+.collection-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+  max-width: 820px;
+}
+
+.collection-title {
+  margin: 0 0 0.75rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.collection-meta {
+  margin: 0 0 0.9rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.collection-desc {
+  margin: 0;
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* Grid */
+.obras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5rem 2rem;
+}
+
+.obra-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image button */
+.obra-img-btn {
+  all: unset;
+  display: block;
+  cursor: zoom-in;
+  overflow: hidden;
+  background: #ece9e4;
+}
+
+.obra-img-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.obra-img-btn:hover img,
+.obra-img-btn:focus-visible img {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+.obra-img-btn:focus-visible {
+  outline: 2px solid var(--active);
+  outline-offset: 2px;
+}
+
+/* Info block */
+.obra-info {
+  padding: 0.85rem 0 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.obra-titulo {
+  margin: 0 0 0.15rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.93rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.obra-tecnica {
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.obra-meta {
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.obra-compra {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line);
+}
+
+.obra-precio {
+  font-size: 0.93rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.btn-consultar {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.9rem;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-consultar:hover,
+.btn-consultar:focus-visible {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Sold state */
+.is-vendida .obra-img-btn {
+  cursor: zoom-in;
+}
+
+.is-vendida .obra-img-btn img {
+  filter: grayscale(35%);
+  opacity: 0.72;
+}
+
+.is-vendida .obra-img-btn:hover img {
+  transform: scale(1.03);
+  opacity: 0.65;
+}
+
+.obra-precio del {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.badge-vendida {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 0.22rem 0.6rem;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   MODAL — Consulta de obra
+   ============================================================ */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal.is-open {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-dialog {
+  position: relative;
+  background: var(--bg);
+  width: min(500px, 100%);
+  padding: 2.2rem 2rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 0.3rem;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.modal-titulo {
+  margin: 0 0 0.25rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding-right: 2rem;
+}
+
+.modal-obra-ref {
+  margin: 0 0 1.8rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.label-optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text);
+  appearance: none;
+  border-radius: 0;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--text);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.85rem;
+  margin-top: 0.25rem;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background: var(--active);
+}
+
+.form-note {
+  margin: 0.8rem 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.modal-success {
+  padding: 2rem 0 1rem;
+  text-align: center;
+}
+
+.modal-success-msg {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ============================================================
+   Responsive — obras grid
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .obras-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .obras-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .collection-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .modal-dialog {
+    padding: 1.6rem 1.2rem;
   }
 }

@@ -254,17 +254,18 @@ if (modal) {
     modalSuccess.hidden = false;
   });
 
-  // Fallback Formspree — solo si el mailto no se ha podido abrir
+  // Fallback Web3Forms — solo si el mailto no se ha podido abrir
   btnFallback.addEventListener('click', async () => {
     if (!pendingData) return;
     btnFallback.disabled = true;
     try {
-      const res = await fetch('https://formspree.io/f/mnjklzwe', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(pendingData),
+        body: JSON.stringify({ access_key: 'd16e2c6b-877b-4509-af7b-34c417ada6d4', ...pendingData }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         fallbackHint.hidden = true;
         fallbackSuccess.hidden = false;
       } else {
@@ -293,12 +294,13 @@ if (contactForm) {
     submitBtn.disabled = true;
 
     try {
-      const res = await fetch('https://formspree.io/f/mnjklzwe', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email: emailVal, motivo, mensaje }),
+        body: JSON.stringify({ access_key: 'd16e2c6b-877b-4509-af7b-34c417ada6d4', nombre, email: emailVal, motivo, mensaje }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         contactForm.reset();
         document.getElementById('contact-success').hidden = false;
         submitBtn.hidden = true;
